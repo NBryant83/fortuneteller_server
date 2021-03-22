@@ -1,3 +1,5 @@
+
+
 const mongoose = require('mongoose')
 const User = require('./models/User')
 const UsersWisdom = require('./models/User')
@@ -15,13 +17,13 @@ const userTest = async () => {
   await newUser.save()
   console.log('newUser', newUser)
 // READ a user
-  // READ a user
   const foundUser = await User.findOne({
    name: newUser.name
   })
 // UPDATE a user
   console.log('foundUser', foundUser)
 // DESTROY a user
+
   // UPDATE a user
   foundUser.name = 'test #2'
   await foundUser.save()
