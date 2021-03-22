@@ -70,9 +70,9 @@ Erin
 
 ### Sprints:
 
-Est. of day 1- Create a repo, and the whole group interacts with is. Structure the site (lay it out), and place
-routes. Structure Crystal Ball modules in db.
-Est. of March 22- Get github fixed, start mern auth and add wisdom to local db's.
+Est. of March 22nd- Structure the site (lay it out), and place routes. start mernAuth and add wisdom to local db's.
+Next Step- Run test files on different computers, text all different pieces together after merge. Finish Auth.
+\*\*\*\*By Wednesday we hope to hit MVP
 
 ### Routes:
 
