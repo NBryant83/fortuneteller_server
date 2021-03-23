@@ -11,7 +11,7 @@ router.get("/", (req, res) => {
 });
 
 //POST "/users/register" --create a new user
-router.post("/users/register", async (req, res) => {
+router.post("/register", async (req, res) => {
   try {
     //   // look at req.body and see if the username exists already in th db
     const searchUser = await User.findOne({
@@ -53,7 +53,7 @@ router.post("/users/register", async (req, res) => {
 });
 
 //POST "/users/login" --validate credentials
-router.post("(need login route)", async (req, res) => {
+router.post("/login", async (req, res) => {
   try {
     const searchUser = await User.findOne({});
     const loginError = "Incorrect username or password, please try again";
@@ -77,9 +77,9 @@ router.post("(need login route)", async (req, res) => {
 });
 
 // GET "/auth-locked" --redirect if a bad token is found
-router.get("/", AuthLockedRoute, (req, res) => {
+router.get("/auth-locked", AuthLockedRoute, (req, res) => {
   console.log(res.locals.user);
-  res.json({ msg: "(enter message here) 🥳" });
+  res.json({ msg: "Bad token found 🤕" });
 });
 
 module.exports = router;
