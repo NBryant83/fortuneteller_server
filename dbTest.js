@@ -29,20 +29,20 @@
 //     foundUser.name = "test #2";
 //     await foundUser.save();
 
-    //READ a user (find one again)
-    // const findUserAgain = await User.findOne({
-    //   name: "bangBang",
-    // });
-    // console.log("findUserAgain", findUserAgain);
+//READ a user (find one again)
+// const findUserAgain = await User.findOne({
+//   name: "bangBang",
+// });
+// console.log("findUserAgain", findUserAgain);
 
-    // DESTROY a user
-    // const deleteUser = await User.deleteOne({
-    //   name: "test name",
-    // });
-    // console.log("deleteUser", deleteUser);
-    // process.exit();
+// DESTROY a user
+// const deleteUser = await User.deleteOne({
+//   name: "test name",
+// });
+// console.log("deleteUser", deleteUser);
+// process.exit();
 
-    //catch if error
+//catch if error
 //   } catch (error) {
 //     console.log("👻 👻 👻 ", error);
 //     process.exit();
