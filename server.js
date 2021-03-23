@@ -4,10 +4,10 @@ const rowdy = require("rowdy-logger");
 const morgan = require("morgan");
 const cors = require("cors");
 require("dotenv").config();
-const Wisdom = require("./models/Wisdom")
-const quotes = require('./seeders/quotes.json')
+const Wisdom = require("./models/Wisdom");
+const quotes = require("./seeders/quotes.json");
+const mongoose = require("mongoose");
 
-const mongoose = require('mongoose')
 //Config Express App//
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -18,11 +18,10 @@ app.use(morgan("tiny"));
 app.use(cors());
 //request body parser
 app.use(express.json());
-// mongoose.connect('mongodb://localhost/fortunetellerdb')
-
 
 //Mongoose Config//
-const MONGO_URI = process.env.MONGO_URI || "mongodb://localhost:27017/fortunetellerdb";
+const MONGO_URI =
+  process.env.MONGO_URI || "mongodb://localhost:27017/fortunetellerdb";
 
 //Connect to MONGO_URI//
 mongoose.connect(MONGO_URI, {
@@ -40,6 +39,7 @@ db.once("open", () => {
 db.on("error", (err) => {
   console.error(`☠️ ☠️ ☠️ Oh no! Something is wrong with the DB!\n ${err}`);
 });
+
 //Custom Middleware//
 // app.use((req, res, next) => {
 //   console.log("Hello from a Middleware!🤘");
@@ -52,14 +52,20 @@ app.get("/", (req, res) => {
 });
 
 //Controllers//
-// app.use("/api-v1/users", require("./controllers/api-v1/usersController");
-// app.use("/api-v1/users", require("./controllers/usersController"));
+app.use("api-v2/authlock", require("./controllers/api-v1/AuthLockedRoute"));
+app.use("api-v1/users", require("./controllers/api-v1/usersController"));
 
-app.get('/seeders', (req, res) => {
-  Wisdom.insertMany(quotes.quotes, (error, wisdoms) => {
-    res.json(wisdoms)
-  })
-})
+//Seeders Route
+app.get("/seeders", (req, res) => {
+  try {
+    Wisdom.insertMany(quotes.quotes, (error, wisdoms) => {
+      res.json(wisdoms);
+    });
+  } catch (error) {
+    console.log("error with seeders route😭 😭 😭 ", error);
+  }
+});
+
 //Tell Express to Listen on Port//
 app.listen(PORT, () => {
   rowdyResults.print();
