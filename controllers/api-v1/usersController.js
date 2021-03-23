@@ -34,18 +34,18 @@ router.post("/users/register", async (req, res) => {
     });
     await newUser.save();
 
-    //     // make a jwt payload
+    // make a jwt payload
     const payload = {
       username: newUser.username,
     };
 
-    //     // sign it and send it back
+    // sign it and send it back
     const token = jwt.sign(payload, process.env.JWT_SECRET, {
       expiresIn: 60 * 60,
     });
     res.json({ token });
 
-    //     //catch errors & display
+    //catch errors & display
   } catch (error) {
     console.log(error);
     res.status(500).json({ msg: "🔥  error" });

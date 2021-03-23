@@ -7,10 +7,11 @@ require("dotenv").config();
 const Wisdom = require("./models/Wisdom");
 const quotes = require("./seeders/quotes.json");
 const mongoose = require("mongoose");
+const mongodb = require("mongodb");
 
 //Config Express App//
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 const rowdyResults = rowdy.begin(app);
 
 //Middleware//
@@ -52,7 +53,7 @@ app.get("/", (req, res) => {
 });
 
 //Controllers//
-app.use("api-v2/authlock", require("./controllers/api-v1/AuthLockedRoute"));
+app.use("api-v2/auth-lock", require("./controllers/api-v1/AuthLockedRoute"));
 app.use("api-v1/users", require("./controllers/api-v1/usersController"));
 
 //Seeders Route
@@ -62,7 +63,7 @@ app.get("/seeders", (req, res) => {
       res.json(wisdoms);
     });
   } catch (error) {
-    console.log("error with seeders route😭 😭 😭 ", error);
+    console.log("😭 😭 😭 ", error);
   }
 });
 
