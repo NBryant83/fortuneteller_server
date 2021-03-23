@@ -71,7 +71,10 @@ Erin
 ### Sprints:
 
 Est. of March 22nd- Structure the site (lay it out), and place routes. start mernAuth and add wisdom to local db's.
-Next Step- Run test files on different computers, text all different pieces together after merge. Finish Auth.
+
+Sprints March 23rd: Check to see if main file structuring/routes & mernAuth work universally. Add seederfile/hard coded quotes to wisdom files.
+
+Next Step- Run test files on different computers, text all different pieces together after merge.
 \*\*\*\*By Wednesday we hope to hit MVP
 
 ### Routes:
