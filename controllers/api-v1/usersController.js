@@ -4,6 +4,7 @@ const User = require("../../models/User");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const AuthLockedRoute = require("./AuthLockedRoute");
+require("dotenv").config;
 
 //GET "/users" --test endpoint
 router.get("/", (req, res) => {
@@ -18,33 +19,35 @@ router.post("/register", async (req, res) => {
       username: req.body.username,
     });
 
-    // if the user is found -- return function and respond
-    if (searchUser)
+    // // if the user is found -- return function and respond
+    if (searchUser) {
       return res.status(400).json({ msg: "username exists already" });
+    } else {
+      // hash the password from the req.body
+      const password = req.body.password;
+      const saltRounds = 12;
+      const hashedPassword = await bcrypt.hash(password, saltRounds);
 
-    // hash the password from the req.body
-    const password = req.body.password;
-    const saltRounds = 12;
-    const hashedPassword = await bcrypt.hash(password, saltRounds);
+      console.log(hashedPassword);
+      // CREATE a user in the db
+      const newUser = new User({
+        username: req.body.username,
+        password: hashedPassword,
+      });
+      console.log(newUser);
+      await newUser.save();
 
-    // CREATE a user in the db
-    const newUser = new User({
-      username: req.body.username,
-      password: hashedPassword,
-    });
-    await newUser.save();
+      // make a jwt payload
+      const payload = {
+        username: newUser.username,
+      };
 
-    // make a jwt payload
-    const payload = {
-      username: newUser.username,
-    };
-
-    // sign it and send it back
-    const token = jwt.sign(payload, process.env.JWT_SECRET, {
-      expiresIn: 60 * 60,
-    });
-    res.json({ token });
-
+      // sign it and send it back
+      const token = jwt.sign(payload, process.env.JWT_SECRET, {
+        expiresIn: 60 * 60,
+      });
+      res.json({ token });
+    }
     //catch errors & display
   } catch (error) {
     console.log(error);
