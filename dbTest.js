@@ -6,6 +6,10 @@ const Wisdom = require("./models/User");
 const models = require("./models");
 require("./models");
 
+const quotes = require("./quotes.json");
+
+//use quotes.quotes b/c it is inside a key value pair
+
 // CREATE a user
 const userTest = async () => {
   try {
@@ -32,11 +36,11 @@ const userTest = async () => {
     // console.log("findUserAgain", findUserAgain);
 
     // DESTROY a user
-    const deleteUser = await User.deleteOne({
-      name: "test name",
-    });
-    console.log("deleteUser", deleteUser);
-    process.exit();
+    // const deleteUser = await User.deleteOne({
+    //   name: "test name",
+    // });
+    // console.log("deleteUser", deleteUser);
+    // process.exit();
 
     //catch if error
   } catch (error) {
