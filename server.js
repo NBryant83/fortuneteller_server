@@ -4,6 +4,8 @@ const rowdy = require("rowdy-logger");
 const morgan = require("morgan");
 const cors = require("cors");
 require("dotenv").config();
+const Wisdom = require("./models/Wisdom")
+const quotes = require('./seeders/quotes.json')
 
 const mongoose = require('mongoose')
 //Config Express App//
@@ -51,10 +53,12 @@ app.get("/", (req, res) => {
 
 //Controllers//
 // app.use("/api-v1/users", require("./controllers/api-v1/usersController");
-app.use("/api-v1/users", require("./controllers/usersController"));
+// app.use("/api-v1/users", require("./controllers/usersController"));
 
-app.get('/seed', (req, res) => {
-  
+app.get('/seeders', (req, res) => {
+  Wisdom.insertMany(quotes.quotes, (error, wisdoms) => {
+    res.json(wisdoms)
+  })
 })
 //Tell Express to Listen on Port//
 app.listen(PORT, () => {
