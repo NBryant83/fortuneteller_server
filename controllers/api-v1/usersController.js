@@ -4,7 +4,6 @@ const User = require("../../models/User");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const AuthLockedRoute = require("./AuthLockedRoute");
-require("dotenv").config;
 
 //GET "/users" --test endpoint
 router.get("/", (req, res) => {
