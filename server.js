@@ -7,7 +7,6 @@ require("dotenv").config();
 const Wisdom = require("./models/Wisdom");
 const quotes = require("./seeders/quotes.json");
 const mongoose = require("mongoose");
-const mongodb = require("mongodb");
 
 //Config Express App//
 const app = express();
@@ -47,8 +46,12 @@ app.get("/", (req, res) => {
 });
 
 //Controllers//
-app.use("/api-v2/auth-lock", require("./controllers/api-v1/AuthLockedRoute"));
+app.use("/api-v1/auth-lock", require("./controllers/api-v1/AuthLockedRoute"));
 app.use("/api-v1/users", require("./controllers/api-v1/usersController"));
+app.use(
+  "/api-v1/crystal-ball",
+  require("./controllers/api-v1/wisdomController")
+);
 
 //Seeders Route
 app.get("/seeders", (req, res) => {
