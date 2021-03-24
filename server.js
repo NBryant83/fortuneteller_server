@@ -41,20 +41,14 @@ db.on("error", (err) => {
   console.error(`☠️ ☠️ ☠️ Oh no! Something is wrong with the DB!\n ${err}`);
 });
 
-//Custom Middleware//
-// app.use((req, res, next) => {
-//   console.log("Hello from a Middleware!🤘");
-//   next();
-// });
-
 //Test Route// GET(index route)
 app.get("/", (req, res) => {
   res.json({ msg: "Hello World 👋 🌎" });
 });
 
 //Controllers//
-app.use("api-v2/auth-lock", require("./controllers/api-v1/AuthLockedRoute"));
-app.use("api-v1/users", require("./controllers/api-v1/usersController"));
+app.use("/api-v2/auth-lock", require("./controllers/api-v1/AuthLockedRoute"));
+app.use("/api-v1/users", require("./controllers/api-v1/usersController"));
 
 //Seeders Route
 app.get("/seeders", (req, res) => {

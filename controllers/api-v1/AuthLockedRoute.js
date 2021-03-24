@@ -5,6 +5,7 @@ const User = require("../../models/User");
 //Route Specific Middleware for jwt auth//
 const AuthLockedRoute = async (req, res, next) => {
   try {
+    console.log("is it the auth controller? ☠️");
     //if incoming jwt
     const authHeader = req.headers.authorization;
 
