@@ -57,7 +57,9 @@ router.post("/register", async (req, res) => {
 //POST "/users/login" --validate credentials
 router.post("/login", async (req, res) => {
   try {
-    const searchUser = await User.findOne({});
+    const searchUser = await User.findOne({
+      username: req.body.username,
+    });
     const loginError = "Incorrect username or password, please try again";
     if (!searchUser) return res.status(400).json({ msg: loginError });
     const comparePassword = await bcrypt.compare(
