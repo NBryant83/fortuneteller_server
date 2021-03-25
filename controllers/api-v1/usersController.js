@@ -1,6 +1,7 @@
 //Require Packages//
 const router = require("express").Router();
-const User = require("../../models/User");
+const {User} = require("../../models/User");
+const {Wisdom} = require("../../models/User");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const AuthLockedRoute = require("./AuthLockedRoute");
@@ -39,6 +40,7 @@ router.post("/register", async (req, res) => {
       // make a jwt payload
       const payload = {
         username: newUser.username,
+        id: newUser.id
       };
 
       // sign it and send it back
@@ -69,6 +71,7 @@ router.post("/login", async (req, res) => {
     if (!comparePassword) return res.status(400).json({ msg: loginError });
     const payload = {
       username: searchUser.username,
+      id: searchUser.id
     };
     const token = jwt.sign(payload, process.env.JWT_SECRET, {
       expiresIn: 60 * 60,

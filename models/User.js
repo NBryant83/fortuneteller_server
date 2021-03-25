@@ -1,6 +1,16 @@
 //Require Packages//
 const mongoose = require("mongoose");
 
+const WisdomSchema = new mongoose.Schema({
+  quote: {
+    type: String,
+  },
+  date: {
+    type: Date,
+    default: Date.now,
+  },
+});
+
 //Create a Schema/Module//
 const UserSchema = new mongoose.Schema({
   username: {
@@ -9,6 +19,10 @@ const UserSchema = new mongoose.Schema({
   password: {
     type: String,
   },
+  quotes: [WisdomSchema],
 });
 
-module.exports = User = mongoose.model("user", UserSchema);
+const User = mongoose.model("user", UserSchema);
+const Wisdom = mongoose.model('wisdom', WisdomSchema);
+
+module.exports = {User, Wisdom}
