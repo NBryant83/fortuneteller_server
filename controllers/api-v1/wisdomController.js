@@ -5,7 +5,6 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const AuthLockedRoute = require("./AuthLockedRoute");
 require("dotenv").config;
-const quotes = require("../../seeders/quotes.json");
 
 //GET "/users" --test endpoint
 router.get("/", (req, res) => {
