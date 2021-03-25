@@ -1,14 +1,14 @@
 //Require Packages//
 const router = require("express").Router();
-const {User} = require("../../models/User");
-const {Wisdom} = require("../../models/User");
+const { User } = require("../../models/User");
+const { Wisdom } = require("../../models/User");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const AuthLockedRoute = require("./AuthLockedRoute");
 
 //GET "/users" --test endpoint
 router.get("/", (req, res) => {
-  res.json({ msg: "hello from users!" });
+  res.json({ msg: "Hello from users!🌸" });
 });
 
 //POST "/users/register" --create a new user
@@ -28,19 +28,19 @@ router.post("/register", async (req, res) => {
       const saltRounds = 12;
       const hashedPassword = await bcrypt.hash(password, saltRounds);
 
-      console.log(hashedPassword);
+      // console.log(hashedPassword);
       // CREATE a user in the db
       const newUser = new User({
         username: req.body.username,
         password: hashedPassword,
       });
-      console.log(newUser);
+      // console.log(newUser);
       await newUser.save();
 
       // make a jwt payload
       const payload = {
         username: newUser.username,
-        id: newUser.id
+        id: newUser.id,
       };
 
       // sign it and send it back
@@ -71,7 +71,7 @@ router.post("/login", async (req, res) => {
     if (!comparePassword) return res.status(400).json({ msg: loginError });
     const payload = {
       username: searchUser.username,
-      id: searchUser.id
+      id: searchUser.id,
     };
     const token = jwt.sign(payload, process.env.JWT_SECRET, {
       expiresIn: 60 * 60,
@@ -83,10 +83,11 @@ router.post("/login", async (req, res) => {
   }
 });
 
-// GET "/auth-locked" --redirect if a bad token is found
-router.get("/auth-locked", AuthLockedRoute, (req, res) => {
-  console.log(res.locals.user);
-  res.json({ msg: "Bad token found 🤕" });
-});
+// // GET "/auth-locked" --redirect if a bad token is found
+// router.get("/auth-locked", AuthLockedRoute, (req, res) => {
+//   // console.log(res.locals.user);
+
+//   res.json({ msg: "Bad token found 🤕" });
+// });
 
 module.exports = router;

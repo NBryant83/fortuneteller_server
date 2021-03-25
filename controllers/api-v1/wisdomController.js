@@ -3,8 +3,8 @@ const router = require("express").Router();
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const AuthLockedRoute = require("./AuthLockedRoute");
-const {User} = require("../../models/User");
-const {Wisdom} = require("../../models/User");
+const { User } = require("../../models/User");
+const { Wisdom } = require("../../models/User");
 const { Error } = require("mongoose");
 require("dotenv").config;
 
@@ -14,20 +14,31 @@ router.get("/", (req, res) => {
 });
 
 //POST route
-router.post('/:userId/quotes', async(req, res) => {
+router.post("/:userId/quotes", async (req, res) => {
   try {
-    const quote = new Wisdom ({
-      quote: req.body.quote
-    })
-    console.log()
-    const findUser = await User.findById(req.params.userId)
-    console.log(findUser)
-    findUser.quotes.push(quote)
-    await findUser.save(User)
-    res.json({msg: "Found User"})
+    const quote = new Wisdom({
+      quote: req.body.quote,
+    });
+    console.log();
+    const findUser = await User.findById(req.params.userId);
+    console.log(findUser);
+    findUser.quotes.push(quote);
+    await findUser.save(User);
+    res.json({ msg: "Found User" });
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
-})
+});
+
+//GET route (get user's quote array)
+router.get("/:userId/quotes", async (req, res) => {
+  try {
+    const findUser = await User.findById(req.params.userId);
+    // console.log(findUser.quotes);
+    res.json(findUser.quotes);
+  } catch (error) {
+    console.log(error);
+  }
+});
 
 module.exports = router;
