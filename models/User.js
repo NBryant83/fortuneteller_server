@@ -23,6 +23,5 @@ const UserSchema = new mongoose.Schema({
 });
 
 const User = mongoose.model("user", UserSchema);
-const Wisdom = mongoose.model('wisdom', WisdomSchema);
-
-module.exports = {User, Wisdom}
+const Wisdom = mongoose.model("wisdom", WisdomSchema);
+module.exports = { User, Wisdom };
