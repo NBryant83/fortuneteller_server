@@ -4,7 +4,6 @@ const User = require("../../models/User");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const AuthLockedRoute = require("./AuthLockedRoute");
-require("dotenv").config;
 
 //GET "/users" --test endpoint
 router.get("/", (req, res) => {
@@ -59,7 +58,11 @@ router.post("/register", async (req, res) => {
 router.post("/login", async (req, res) => {
   try {
     const searchUser = await User.findOne({
+<<<<<<< HEAD
       username: req.body.username
+=======
+      username: req.body.username,
+>>>>>>> a8d400d7e30e2144a0652dd96eaf0cf9a2886098
     });
     const loginError = "Incorrect username or password, please try again";
     if (!searchUser) return res.status(400).json({ msg: loginError });
