@@ -4,8 +4,6 @@ const rowdy = require("rowdy-logger");
 const morgan = require("morgan");
 const cors = require("cors");
 require("dotenv").config();
-const Wisdom = require("./models/Wisdom");
-const quotes = require("./seeders/quotes.json");
 const mongoose = require("mongoose");
 
 //Config Express App//
@@ -48,21 +46,6 @@ app.get("/", (req, res) => {
 //Controllers//
 app.use("/api-v1/auth-lock", require("./controllers/api-v1/AuthLockedRoute"));
 app.use("/api-v1/users", require("./controllers/api-v1/usersController"));
-app.use(
-  "/api-v1/crystal-ball",
-  require("./controllers/api-v1/wisdomController")
-);
-
-//Seeders Route
-app.get("/seeders", (req, res) => {
-  try {
-    Wisdom.insertMany(quotes.quotes, (error, wisdoms) => {
-      res.json(wisdoms);
-    });
-  } catch (error) {
-    console.log("😭 😭 😭 ", error);
-  }
-});
 
 //Tell Express to Listen on Port//
 app.listen(PORT, () => {
