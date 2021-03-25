@@ -1,6 +1,7 @@
 //Set-Up//
 const jwt = require("jsonwebtoken");
-const User = require("../../models/User");
+const {User} = require("../../models/User");
+
 
 //Route Specific Middleware for jwt auth//
 const AuthLockedRoute = async (req, res, next) => {
