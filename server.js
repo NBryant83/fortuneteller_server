@@ -17,39 +17,58 @@ app.use(cors());
 //request body parser
 app.use(express.json());
 
-//Mongoose Config//
-const MONGO_URI =
-  process.env.MONGO_URI || "mongodb://localhost:27017/fortunetellerdb";
+// database connection config
+if(process.env.NODE_ENV === 'development') {
+  // mongoose config
+  const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost/fortunetellerdb'
 
-//Connect to MONGO_URI//
-mongoose.connect(MONGO_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  useCreateIndex: true,
-  useFindAndModify: false,
+  mongoose.connect(MONGO_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+    useFindAndModify: false
+  })  
+  //Database Methods for Debugging//
+  db.once("open", () => {
+    console.log(`👐 mongoDB connection @ ${db.host}: ${db.port} 👐`);
+  });
+  db.on("error", (err) => {
+    console.error(`☠️ ☠️ ☠️ Oh no! Something is wrong with the DB!\n ${err}`);
+  });
+} else {
+  const MongoClient = require('mongodb').MongoClient;
+  
+  const uri = proces.env.ATLAS_URI;
+ 
+  const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+  
+  client.connect(err => {
+  const collection = client.db("test").collection("devices");
+  // perform actions on the collection object
+  client.close();
 });
-const db = mongoose.connection;
 
-//Database Methods for Debugging//
-db.once("open", () => {
-  console.log(`👐 mongoDB connection @ ${db.host}: ${db.port} 👐`);
-});
-db.on("error", (err) => {
-  console.error(`☠️ ☠️ ☠️ Oh no! Something is wrong with the DB!\n ${err}`);
-});
+  mongoose.connect(uri, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+    useFindAndModify: false
+  })
+  
+  //Test Route// GET(index route)
+  app.get("/", (req, res) => {
+    res.json({ msg: "Hello World 👋 🌎" });
+  });
+  
+  //Controllers//
+  app.use("/api-v1/auth-lock", require("./controllers/api-v1/AuthLockedRoute"));
+  app.use("/api-v1/users", require("./controllers/api-v1/usersController"));
+  app.use("/api-v1/users", require("./controllers/api-v1/wisdomController"));
+  
 
-//Test Route// GET(index route)
-app.get("/", (req, res) => {
-  res.json({ msg: "Hello World 👋 🌎" });
-});
 
-//Controllers//
-app.use("/api-v1/auth-lock", require("./controllers/api-v1/AuthLockedRoute"));
-app.use("/api-v1/users", require("./controllers/api-v1/usersController"));
-app.use("/api-v1/users", require("./controllers/api-v1/wisdomController"));
-
-//Tell Express to Listen on Port//
+  //Tell Express to Listen on Port//
 app.listen(PORT, () => {
-  rowdyResults.print();
-  console.log(`🚢: ${PORT}`);
-});
+rowdyResults.print();
+ console.log(`🚢: ${PORT}`);
+}
